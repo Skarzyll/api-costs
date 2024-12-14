@@ -1,8 +1,8 @@
-const express = require('express')
-const Project = require('./Server')
-const cors = require('cors')
-const { format } = require('date-fns')
-const { ptBR } = require('date-fns/locale')
+import express, { urlencoded, json } from 'express'
+import { findAll, create, destroy, update } from './Server'
+import cors from 'cors'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 
 const PORT = process.env.PORT || 3000;
 
@@ -10,12 +10,12 @@ const app = express();
 
 app.use(cors());
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(urlencoded({ extended: false }));
+app.use(json());
 
 app.get("/", async (req, res) => {
 	try {
-		const projects = await Project.findAll();
+		const projects = await findAll();
 		const funcform = projects.map((project) => ({
 			id: project.id,
 			name: project.name,
@@ -37,7 +37,7 @@ app.get("/", async (req, res) => {
 
 app.post("/", async (req, res) => {
 	try {
-		await Project.create({
+		await create({
 			name: req.body.name,
 			buy: req.body.buy,
 			categoria_id: req.body.categoria_id,
@@ -50,7 +50,7 @@ app.post("/", async (req, res) => {
 
 app.get("/projects", async (req, res) => {
 	try {
-		const projects = await Project.findAll();
+		const projects = await findAll();
 		const funcform = projects.map((project) => ({
 			id: project.id,
 			name: project.name,
@@ -72,7 +72,7 @@ app.get("/projects", async (req, res) => {
 
 app.get("/projectsone/:id", async (req, res) => {
 	try {
-		const project = await Project.findAll({
+		const project = await findAll({
 			where: {
 				id: req.params.id,
 			},
@@ -99,7 +99,7 @@ app.get("/projectsone/:id", async (req, res) => {
 
 app.delete("/projectsdelete/:id", async (req, res) => {
 	try {
-		await Project.destroy({
+		await destroy({
 			where: {
 				id: req.params.id,
 			},
@@ -116,7 +116,7 @@ app.patch("/projectsedit/:id", async (req, res) => {
 	try {
 		const { newName, newBuy, newCategoria } = req.body;
 
-		const [updatedRows, updatedProject] = await Project.update(
+		const [updatedRows, updatedProject] = await update(
 			{
 				name: newName,
 				buy: newBuy,
