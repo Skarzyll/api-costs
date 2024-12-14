@@ -1,8 +1,9 @@
-import express, { urlencoded, json } from 'express'
-import { findAll, create, destroy, update } from './Server.js'
-import cors from 'cors'
-import { format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
+import express from "express";
+import Project from "./Server.js";
+import cors from "cors";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import "dotenv/config";
 
 const PORT = process.env.PORT || 3000;
 
@@ -37,7 +38,7 @@ app.get("/", async (req, res) => {
 
 app.post("/", async (req, res) => {
 	try {
-		await create({
+		await Project.create({
 			name: req.body.name,
 			buy: req.body.buy,
 			categoria_id: req.body.categoria_id,
@@ -50,7 +51,7 @@ app.post("/", async (req, res) => {
 
 app.get("/projects", async (req, res) => {
 	try {
-		const projects = await findAll();
+		const projects = await Project.findAll();
 		const funcform = projects.map((project) => ({
 			id: project.id,
 			name: project.name,
@@ -72,7 +73,7 @@ app.get("/projects", async (req, res) => {
 
 app.get("/projectsone/:id", async (req, res) => {
 	try {
-		const project = await findAll({
+		const project = await Project.findAll({
 			where: {
 				id: req.params.id,
 			},
@@ -99,7 +100,7 @@ app.get("/projectsone/:id", async (req, res) => {
 
 app.delete("/projectsdelete/:id", async (req, res) => {
 	try {
-		await destroy({
+		await Project.destroy({
 			where: {
 				id: req.params.id,
 			},
@@ -116,7 +117,7 @@ app.patch("/projectsedit/:id", async (req, res) => {
 	try {
 		const { newName, newBuy, newCategoria } = req.body;
 
-		const [updatedRows, updatedProject] = await update(
+		const [updatedRows, updatedProject] = await Project.update(
 			{
 				name: newName,
 				buy: newBuy,
