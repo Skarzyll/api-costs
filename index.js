@@ -1,9 +1,8 @@
 const express = require('express')
-/* import Project from "./Server.mjs"; */
+const Project = require('./Server')
 const cors = require('cors')
-/* import { format } from "date-fns";
-import { ptBR } from "date-fns/locale"; */
-/* require('dotenv').config() */
+const { format } = require('date-fns')
+const { ptBR } = require('date-fns/locale')
 
 const PORT = process.env.PORT || 3000;
 
@@ -20,7 +19,7 @@ console.log('tudo ok');
 app.get("/", (req, res) => {
 	res.send("hello from simple server :)");
 });
-/* 
+
 app.post("/", async (req, res) => {
 	try {
 		await Project.create({
@@ -127,6 +126,6 @@ app.patch("/projectsedit/:id", async (req, res) => {
 	} catch (error) {
 		return res.status(500).json(error);
 	}
-}); */
+});
 
 app.listen(PORT, () => console.log(`> Server is up and running in port: ${PORT}`));
