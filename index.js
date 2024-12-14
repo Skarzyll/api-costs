@@ -13,11 +13,26 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-console.log('tudo ok');
+app.get("/", async (req, res) => {
+	try {
+		const projects = await Project.findAll();
+		const funcform = projects.map((project) => ({
+			id: project.id,
+			name: project.name,
+			buy: project.buy,
+			categoria_id: project.categoria_id,
+			createdAt: format(new Date(project.createdAt), "dd/MM/yyyy HH:mm", {
+				locale: ptBR,
+			}),
+			updatedAt: format(new Date(project.updatedAt), "dd/MM/yyyy HH:mm", {
+				locale: ptBR,
+			}),
+		}));
 
-
-app.get("/", (req, res) => {
-	res.send("hello from simple server :)");
+		res.json(funcform);
+	} catch (error) {
+		res.status(500).json(error);
+	}
 });
 
 app.post("/", async (req, res) => {
