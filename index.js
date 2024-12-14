@@ -11,8 +11,8 @@ const app = express();
 
 app.use(cors());
 
-app.use(urlencoded({ extended: false }));
-app.use(json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.get("/", async (req, res) => {
 	try {
