@@ -1,5 +1,5 @@
 import express, { urlencoded, json } from 'express'
-import { findAll, create, destroy, update } from './Server'
+import { findAll, create, destroy, update } from './Server.js'
 import cors from 'cors'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
