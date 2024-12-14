@@ -29,7 +29,7 @@ app.get("/", async (req, res) => {
 			}),
 		}));
 
-		res.json(funcform);
+		res.send(funcform);
 	} catch (error) {
 		res.status(500).json(error);
 	}
