@@ -16,7 +16,7 @@ app.use(express.json());
 
 app.get("/", async (req, res) => {
 	try {
-		const projects = await findAll();
+		const projects = await Project.findAll();
 		const funcform = projects.map((project) => ({
 			id: project.id,
 			name: project.name,
